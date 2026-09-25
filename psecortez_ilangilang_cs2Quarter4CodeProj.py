@@ -39,8 +39,6 @@ def display_headers():
         print() 
     print("Your Name") 
     print("----------------------------------") 
-    print("Prinx Savier E. Cortez") 
-    print("b2030psecortez@pshs.edu.ph")
     print()
     print("Project Your Name")
     print()
