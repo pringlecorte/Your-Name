@@ -13,6 +13,20 @@ MAP_NUM = 1
 FINISHED = False
 
 ## DESIGN AND MENU!!!
+def typewrite(text, timing_per_letter, padding):
+    for letter in text:
+        print(letter, end='', flush=True)
+        time.sleep(timing_per_letter)
+    print(""*padding)
+
+def typewrite_list(list, timing_per_letter, timing_per_text, padding):
+    for text in list:
+        for letter in text:
+            print(letter, end='', flush=True)
+            time.sleep(timing_per_letter)
+        time.sleep(timing_per_text)
+        print()
+    print(""*padding)
 
 def display_headers():
     print(''*60) 
@@ -27,14 +41,8 @@ def PsuedoGameLoading():
     word = "Stella: wait! I recall another memory..."
     load = "............"
     everydialogue = [word, load]
-    for i in everydialogue:
-        for y in i:
-            print(y, end='', flush=True)
-            time.sleep(0.1)
-        print()
-        time.sleep(0.08)
+    typewrite_list(everydialogue, 0.1, 0.08, 2)
 
-    print(""*2)
 
 def Menu(WIDTH, HEIGHT, FOV, RES, PROJECTED_RAYS, MULTIPLAYER):
     pygame.display.iconify()
@@ -84,9 +92,7 @@ def Menu(WIDTH, HEIGHT, FOV, RES, PROJECTED_RAYS, MULTIPLAYER):
         MULTIPLAYER = False
 
     basics = '[SYSTEM]: To move around, press WASD/Arrow Key. If playing on MULTIPLAYER, player "Stella" is on the left, and player "cloverforever0905" on the right'
-    for i in basics:
-        print(i, end='', flush=True)
-        time.sleep(0.04)
+    typewrite(basics, 0.04, 2)
 
     PROJECTED_RAYS = FOV//RES
     if PROJECTED_RAYS == 0:
@@ -96,18 +102,11 @@ def Multiplayer_Menu(MINIGAME_NUMBER):
     print()
     
     seperator = '---------------------'
-    for i in seperator:
-        print(i, end='', flush=True)
-        time.sleep(0.1)
-
-    print(""*2)
+    typewrite(seperator, 0.1, 2)
 
     today = '[SYSTEM]: What are we doing today?'
     
-    for i in today:
-        print(i, end='', flush=True)
-        time.sleep(0.1)
-    print()
+    typewrite(today, 0.1, 2)
     
     GAME_LIST = ["[1] 'Young Stella: 'I challenge you to Montgeometry Racers!!'", "[2] 'Young ████: 'let's play Blind and Seek'", "[3] Open Google Chrome", "[4] Shut Down Lenovo ThinkPad X100e"]
     ERROR_MESSAGE = ["Geometry_Dash.exe", "File not found.", "Check the file name and try again"]
@@ -157,20 +156,20 @@ def choiceToPlay():
             print("Stella: ...please...")
             print()
 
-        elif REPLAY() == 'Y':
+        elif REPLAY.upper() == 'Y':
             givingup = 'Stella: I am not giving up!!'
-            for i in givingup:
-                print(i, end='', flush=True)
-                time.sleep(0.1)
-            print()
-            print()
+            typewrite(givingup, 0.04, 2)
+
 
     return REPLAY
 
+        
+
+
+## GAMESSSS
+
 class MONTGEOMETRY_RACERS:
     def __init__(self, map_num, name):
-        self.MAP_NUM = map_num
-
         self.START = 0
         self.TIMER = 0
         self.TOTAL_TIME = 0
@@ -181,17 +180,11 @@ class MONTGEOMETRY_RACERS:
         self.NAME = name
     def GAME_START(self):
         print()
-        
-        for i in title:
-            print(i, end='', flush=True)
-            time.sleep(0.09)
-        print()
+        title = "Memory II: I'm With You Till the End of the Line"
+        typewrite(title, 0.09, 2)
         
         rules = "[SYSTEM]: Race to get the shorter time!! It's that simple, really. [Open the game window]"
-        for i in rules:
-            print(i, end='', flush=True)
-            time.sleep(0.09)
-        print()
+        typewrite(rules, 0.09, 2)
         
         Screen = pygame.display.set_mode((Width*TileSize, Height*TileSize))
 
@@ -220,6 +213,113 @@ class MONTGEOMETRY_RACERS:
         elif self.STATE == "FINISHED":
             return self.TOTAL_TIME
 
+        if self.DIALOUGE == 1:
+            for i in random.choice(MGR_dialogues_Stella):
+                print(i, end = '', flush= True)
+
+            for i in random.choice(MGR_dialogues_1234):
+                print(i, end='', flush=True)
 
 
+class BLIND_SEEK:
+    def __init__(self, x, y, name):
+        self.x = x
+        self.y = y
+        self.name = name
 
+        self.L_PRESS = 0
+        self.HIDER = False
+    
+
+class BLIND_SEEK_CALC:
+    def __init__(self, player_1, player_2):
+        self.STELLA = player_1
+        self.CLOVER = player_2
+
+        self.START = 0
+        self.END = 0
+        self.COUNT = 0
+        self.GAME_STATE = False
+        self.KEY_STATE = False
+        self.DISTANCE = 0
+
+    def GameStart(self):
+        print()
+        
+        title = "Memory III: Dancing In The Dark"
+        typewrite(title, 0.09, 2)
+        
+
+        rules = "[SYSTEM]:The hider will be given 1 min(s) to hide somewhere in the map and the seeker will be given 2 min(s) to find the seeker. The seeker must find the other guy. Since you are 'blind' and none of you can see the other, press the 'L' key to know how far you are to the other player. Once 1 min(s) is up, the hider isn't allowed to move. Oh and also, you can't press the 'L' key more than eight (8) times [Open the game window]"
+        typewrite(rules, 0.05, 2)
+
+        Screen = pygame.display.set_mode((Width*TileSize, Height*TileSize))
+        time.sleep(1)
+    
+    def coin_flip(self):
+        COIN = random.randint(0,1)
+
+        if COIN == 1:
+            system = ["[SYSTEM]: sT311a38 is the hider!", "cloverforever0905 is the seeker!"]
+            typewrite(system, 0.04, 2)
+            
+            self.STELLA.HIDER = True
+    
+            print("[SYSTEM]: Hider, start hiding!! (Open game window)")
+            self.START = pygame.time.get_ticks()
+    
+            return
+
+        system = ["[SYSTEM]: cloverforever0905 is the hider!", "sT311a38 is the seeker!"]
+        typewrite(system, 0.04, 2)
+
+        self.CLOVER.HIDER = True
+
+        print("[SYSTEM]: Hider, start hiding!! (Open game window)")
+        self.START = pygame.time.get_ticks()
+
+        return
+    
+    
+    def REFEREE(self, name, x, y):
+        key = pygame.key.get_pressed()
+        self.TIMER = pygame.time.get_ticks()
+        self.END = (self.TIMER - self.START)/1000 ## gets seconds
+        
+        if self.END > 10:
+            if not self.GAME_STATE:
+                print("[SYSTSEM]: Seeker...start finding!!")   
+                self.GAME_STATE = True
+            
+            if abs(self.STELLA.x - self.CLOVER.x) < 50:
+                if abs(self.STELLA.y - self.CLOVER.y) < 50:
+                    self.DISTANCE = math.dist((self.STELLA.x, self.STELLA.y), (self.CLOVER.x, self.CLOVER.y))/32
+
+                    if self.DISTANCE < 4:
+                        if self.STELLA.HIDER:
+                            return ## message goes here
+                        
+                        else:
+                            return ## message goes here also
+            
+            if self.STELLA.L_PRESS < 8:
+                if key[pygame.K_l]:
+                    if not self.KEY_STATE:
+                        self.DISTANCE = math.dist((self.STELLA.x, self.STELLA.y), (self.CLOVER.x, self.CLOVER.y))/32
+                        print(f"[SYSTEM]: Hider is {self.DISTANCE}m away")
+                        
+                        self.KEY_STATE = True
+                        self.STELLA.L_PRESS += 1
+
+                else:
+                    self.KEY_STATE = False
+            else:
+                print("[SYSTEM]: You used up all your presses!!")
+
+
+            if self.END > 120:
+                if self.STELLA.HIDER:
+                    return ## MESSAGE GOES HERE I FORGOT HAHA
+            
+                else:
+                    return ## SAME GOES HERE
