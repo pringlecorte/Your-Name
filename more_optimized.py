@@ -890,3 +890,8 @@ class Raycaster():
 ## main game loop
 ##figer out how did i work with the minigame number
 ## good night
+
+## planning on using 
+## angle = math.atan2(dx/dy)
+## distance = (y1 - y2)/math.sin(angle)
+## imma weigh the benefits first
