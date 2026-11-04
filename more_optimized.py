@@ -1,3 +1,4 @@
+## THIS IS STILL A WORK IN PROGRESS. WORKING CODE IS MY OTHER ONE BUT ITS MORE UNOPTIMZED (well duh, obv it is)
 import pygame, time, math, sys, random
 pygame.init()
 
